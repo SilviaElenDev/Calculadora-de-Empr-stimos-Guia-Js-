@@ -82,8 +82,21 @@ function getLenders(amount, apr, years, zipcode){
               '&yrs=' + encodeURIComponent(years) +
               '&zip=' + encodeURIComponent(zipcode);
 
-    //Busca o o conteudo do Url criado usando um objeto XMLHTpRequest
+    //Busca o conteudo do Url criado usando um objeto XMLHTpRequest
     var req = new XMLHttpRequest(); //Inicia um novo pedido
     req.open('GET',url);            //Pedido GET da HTTP para o Url
-    req.send(null);                 //Envia o pedido sem corpo
+    req.send(null);                 //Envia o pedido sem corpo.
+
+
+    //
+    req.onreadystatechange = function(){  //Propriedade que aceita uma função de callback que sera chamada sempre que o estado da requisição mudar.
+        if (req.readyState == 4 && req.status == 200){ // 'readyState' Indica o estado da requisição (no caso mais expecificamento veridica se a requisição foi concluida.)
+                                                       // 'status' é o codigo HTTP da resposta 200 = Requisição bem sucedida
+            var response = req.responseText; //Texto da resposta do servidor
+            var lenders = JSON.parse(response); // Converte a string JSON da resposta em um obj JS.
+        }else{
+            
+        }
+    };
 };
+
